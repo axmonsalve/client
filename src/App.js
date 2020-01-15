@@ -8,7 +8,7 @@ import {
 
 import Login from './components/auth/Login';
 import NewAccount from './components/auth/NewAccount';
-import Proyects from './components/proyects/Proyects';
+import Projects from './components/projects/Projects';
 
 function App() {
   return (
@@ -16,7 +16,7 @@ function App() {
       <Switch>
         <Route exact path="/" component={Login} />
         <Route exact path="/new-account" component={NewAccount} />
-        <Route exact path="/proyects" component={Proyects} />
+        <Route exact path="/projects" component={Projects} />
       </Switch>
     </Router>
   );
