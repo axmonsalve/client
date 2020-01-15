@@ -41,7 +41,7 @@ const Login = () => {
               value={email}
               name="email"
               id="email"
-              placeholder="Tu nombre"
+              placeholder="Tu Email"
               onChange={onChange}
             />
           </div>
