@@ -1,6 +1,12 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useContext } from "react";
+
+import ProjectContext from "../../context/projects/projectContext";
 
 const NewProject = () => {
+  //Obtener el state del formulario
+  const projectsContext = useContext(ProjectContext);
+  const { formProject, showForm } = projectsContext;
+
   //State para el proyecto
   const [project, setProject] = useState({
     name: ""
@@ -19,37 +25,43 @@ const NewProject = () => {
 
   //Evento que ejecuta el input del form cuando se crea el proyecto
   const onSubmitProject = e => {
-      e.preventDefault();
+    e.preventDefault();
 
-      //Validar el proyecto
+    //Validar el proyecto
 
-      //Agregar el proyecto al state
+    //Agregar el proyecto al state
 
-      //Reiniciar el form
-  }
+    //Reiniciar el form
+  };
+
+  const onClickForm = () => {
+    showForm();
+}
 
   return (
     <Fragment>
-      <button type="button" className="btn btn-block btn-primario">
+      <button type="button" className="btn btn-block btn-primario" onClick={onClickForm}>
         Nuevo proyecto
       </button>
 
-      <form className="formulario-nuevo-proyecto" onSubmit={onSubmitProject}>
-        <input
-          type="text"
-          className="input-text"
-          placeholder="Nombre del proyecto"
-          name="name"
-          onChange={onChangeProject}
-          value={name}
-        />
+      {formProject ? (
+        <form className="formulario-nuevo-proyecto" onSubmit={onSubmitProject}>
+          <input
+            type="text"
+            className="input-text"
+            placeholder="Nombre del proyecto"
+            name="name"
+            onChange={onChangeProject}
+            value={name}
+          />
 
-        <input
-          type="submit"
-          value="Agregar proyecto"
-          className="btn btn-block btn-primario"
-        />
-      </form>
+          <input
+            type="submit"
+            value="Agregar proyecto"
+            className="btn btn-block btn-primario"
+          />
+        </form>
+      ) : null}
     </Fragment>
   );
 };
