@@ -1,61 +1,85 @@
-import React, { useReducer } from 'react';
+import React, { useReducer } from "react";
 
-import projectContext from './projectContext';
-import projectReducer from './projectReducer';
+import uuid from "uuid";
+
+import projectContext from "./projectContext";
+import projectReducer from "./projectReducer";
 
 //Types
-import { PROJECT_FORM,
-    GET_PROJECT
-} from '../../types';
-
-
+import {
+  PROJECT_FORM,
+  GET_PROJECT,
+  ADD_PROJECT,
+  VALIDATE_FORM
+} from "../../types";
 
 const ProjectState = props => {
+  const projects = [
+    { id: 1, name: "Tienda virtual" },
+    { id: 2, name: "Intranet" },
+    { id: 3, name: "Diseño del sitio web" },
+    { id: 4, name: "MERN" }
+  ];
 
-    const projects = [
-        { id: 1, name: 'Tienda virtual' },
-        { id: 2, name: 'Intranet' },
-        { id: 3, name: 'Diseño del sitio web' },
-        { id: 4, name: 'MERN' }
-    ]
+  //Defeinir el state incial com en redux
+  const initialState = {
+    projects: [],
+    formProject: false, //Que cuando cambia a true, se mostrará en el sidebar los demas componentes
+    errorForm: false
+  };
 
+  //Obtener los proyectos
+  const getProjects = () => {
+    dispatch({
+      type: GET_PROJECT,
+      payload: projects
+    });
+  };
 
-    //Defeinir el state incial com en redux
-    const initialState = {
-        projects: [],
-        formProject: false //Que cuando cambia a true, se mostrará en el sidebar los demas componentes
-    };
+  //Agregar nuevo proyecto
+  const addProject = project => {
+    project.id = uuid.v4();
 
-    //Obtener los proyectos
-    const getProjects = () => {
-        dispatch({
-            type: GET_PROJECT,
-            payload: projects
-        })
-    }
+    //Insertar el proyecto en el state
+    dispatch({
+      type: ADD_PROJECT,
+      payload: project
+    });
+  };
 
-    //Dispatch para ejecutar las acciones
-    const [state, dispatch] = useReducer(projectReducer, initialState);
+  //Validar formulario por error de ingreso vacío
+  const showError = () => {
+    dispatch({
+      type: VALIDATE_FORM
+    });
+  };
 
-    //Serie de funciones para el CRUD
-    const showForm = () => {
-        dispatch({
-            type: PROJECT_FORM
-        });
-    };
+  //Dispatch para ejecutar las acciones
+  const [state, dispatch] = useReducer(projectReducer, initialState);
 
+  //Serie de funciones para el CRUD
+  const showForm = () => {
+    dispatch({
+      type: PROJECT_FORM
+    });
+  };
 
-    //Retornamos con el context
-    return(
-        <projectContext.Provider value={{
-            projects: state.projects,
-            formProject: state.formProject,
-            getProjects,
-            showForm
-            }}>
-            {props.children}
-        </projectContext.Provider>
-    )
-}
+  //Retornamos con el context
+  return (
+    <projectContext.Provider
+      value={{
+        projects: state.projects,
+        formProject: state.formProject,
+        errorForm: state.errorForm,
+        getProjects,
+        addProject,
+        showForm,
+        showError
+      }}
+    >
+      {props.children}
+    </projectContext.Provider>
+  );
+};
 
 export default ProjectState;
