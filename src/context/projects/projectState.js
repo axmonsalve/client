@@ -10,7 +10,8 @@ import {
   PROJECT_FORM,
   GET_PROJECT,
   ADD_PROJECT,
-  VALIDATE_FORM
+  VALIDATE_FORM,
+  ACTUAL_PROJECT
 } from "../../types";
 
 const ProjectState = props => {
@@ -25,7 +26,8 @@ const ProjectState = props => {
   const initialState = {
     projects: [],
     formProject: false, //Que cuando cambia a true, se mostrará en el sidebar los demas componentes
-    errorForm: false
+    errorForm: false,
+    selectedProject: null
   };
 
   //Obtener los proyectos
@@ -64,6 +66,14 @@ const ProjectState = props => {
     });
   };
 
+  //Selecciona el proyecto que el usuario da click
+  const actualProject = projectId => {
+      dispatch({
+          type: ACTUAL_PROJECT,
+          payload: projectId
+      })
+  }
+
   //Retornamos con el context
   return (
     <projectContext.Provider
@@ -71,10 +81,12 @@ const ProjectState = props => {
         projects: state.projects,
         formProject: state.formProject,
         errorForm: state.errorForm,
+        selectedProject: state.selectedProject,
         getProjects,
         addProject,
         showForm,
-        showError
+        showError,
+        actualProject
       }}
     >
       {props.children}
