@@ -11,7 +11,8 @@ import {
   GET_PROJECT,
   ADD_PROJECT,
   VALIDATE_FORM,
-  ACTUAL_PROJECT
+  ACTUAL_PROJECT,
+  DELETE_PROJECT
 } from "../../types";
 
 const ProjectState = props => {
@@ -73,6 +74,14 @@ const ProjectState = props => {
       })
   }
 
+  //Elimina un proyecto
+  const deleteProjectFn = projectId => {
+    dispatch({
+      type: DELETE_PROJECT,
+      payload: projectId
+    });
+  }
+
   //Retornamos con el context
   return (
     <projectContext.Provider
@@ -85,7 +94,8 @@ const ProjectState = props => {
         addProject,
         showForm,
         showError,
-        actualProject
+        actualProject,
+        deleteProjectFn
       }}
     >
       {props.children}
