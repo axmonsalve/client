@@ -31,6 +31,9 @@ const ProjectState = props => {
     selectedProject: null
   };
 
+  //Dispatch para ejecutar las acciones
+  const [state, dispatch] = useReducer(projectReducer, initialState);
+
   //Obtener los proyectos
   const getProjects = () => {
     dispatch({
@@ -55,9 +58,6 @@ const ProjectState = props => {
       type: VALIDATE_FORM
     });
   };
-
-  //Dispatch para ejecutar las acciones
-  const [state, dispatch] = useReducer(projectReducer, initialState);
 
   //Serie de funciones para el CRUD
   const showForm = () => {

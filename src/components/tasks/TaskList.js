@@ -18,12 +18,7 @@ const TaskList = () => {
     deleteProjectFn(actualProject.id);
   };
 
-  const tasks = [
-    { name: "Elegir plataforma", stateTask: true },
-    { name: "Elegir colores", stateTask: false },
-    { name: "Elegir plataformas de pago", stateTask: false },
-    { name: "Elegir hosting", stateTask: true }
-  ];
+  const tasks = [];
 
   return (
     <Fragment>
