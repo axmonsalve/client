@@ -9,9 +9,23 @@ const FormTask = () => {
    //Si no hay proyecto seleccionado
    if(!selectedProject)return null;
 
+   const onSubmitAddTask = e => {
+       e.preventDefault();
+
+       //Validar
+
+       //Pasar la validación
+
+       //Agregar la tarea al state de tareas
+
+       //reiniciar el form
+   }
+
     return (
         <div className="formulario">
-            <form>
+            <form
+                onSubmit={onSubmitAddTask}
+            >
                 <div className="contenedor-input">
                     <input type="text" className="input-text" placeholder="Nombre de la tarea" name="name"/>
                 </div>
