@@ -20,7 +20,8 @@ const TaskState = props => {
       { name: "Elegir colores", stateTask: false, projectId: 1 },
       { name: "Elegir plataformas de pago", stateTask: false, projectId: 2 },
       { name: "Elegir hosting", stateTask: true, projectId: 4 }
-    ]
+    ],
+    projecttasks:null
   };
 
   //Crear Dispatch y el state
@@ -40,6 +41,7 @@ const TaskState = props => {
     <TaskContext.Provider
       value={{
         tasks: state.tasks,
+        projecttasks: state.projecttasks,
         getTaskFn
       }}
     >
