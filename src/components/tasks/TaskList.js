@@ -26,7 +26,7 @@ const TaskList = () => {
 
   return (
     <Fragment>
-      <h2>Proyecto: {actualProject.nametask}</h2>
+      <h2>Proyecto: {actualProject.name}</h2>
       <ul className="listado-tareas">
         {projecttasks.length === 0 ? (
           <li className="tarea">

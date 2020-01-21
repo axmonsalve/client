@@ -3,23 +3,23 @@ import React, { useReducer } from "react";
 import TaskContext from "./taskContext";
 import TaskReducer from "./taskReducer";
 
-import { TASKS_PROJECT, ADD_TASK, VALIDATE_TASK } from "../../types";
+import { TASKS_PROJECT, ADD_TASK, VALIDATE_TASK, DELETE_TASK } from "../../types";
 
 const TaskState = props => {
   const initialState = {
     tasks: [
-      { nametask: "Elegir plataforma", stateTask: true, projectId: 1 },
-      { nametask: "Elegir colores", stateTask: false, projectId: 2 },
-      { nametask: "Elegir plataformas de pago", stateTask: false, projectId: 3 },
-      { nametask: "Elegir hosting", stateTask: true, projectId: 4 },
-      { nametask: "Elegir plataforma", stateTask: true, projectId: 2 },
-      { nametask: "Elegir colores", stateTask: false, projectId: 3 },
-      { nametask: "Elegir plataformas de pago", stateTask: false, projectId: 1 },
-      { nametask: "Elegir hosting", stateTask: true, projectId: 4 },
-      { nametask: "Elegir plataforma", stateTask: true, projectId: 3 },
-      { nametask: "Elegir colores", stateTask: false, projectId: 1 },
-      { nametask: "Elegir plataformas de pago", stateTask: false, projectId: 2 },
-      { nametask: "Elegir hosting", stateTask: true, projectId: 4 }
+      { id: 1, nametask: "Elegir plataforma", stateTask: true, projectId: 1 },
+      { id: 2, nametask: "Elegir colores", stateTask: false, projectId: 2 },
+      { id: 3, nametask: "Elegir plataformas de pago", stateTask: false, projectId: 3 },
+      { id: 4, nametask: "Elegir hosting", stateTask: true, projectId: 4 },
+      { id: 5, nametask: "Elegir plataforma", stateTask: true, projectId: 2 },
+      { id: 6, nametask: "Elegir colores", stateTask: false, projectId: 3 },
+      { id: 7, nametask: "Elegir plataformas de pago", stateTask: false, projectId: 1 },
+      { id: 8, nametask: "Elegir hosting", stateTask: true, projectId: 4 },
+      { id: 9, nametask: "Elegir plataforma", stateTask: true, projectId: 3 },
+      { id: 10, nametask: "Elegir colores", stateTask: false, projectId: 1 },
+      { id: 11, nametask: "Elegir plataformas de pago", stateTask: false, projectId: 2 },
+      { id: 12, nametask: "Elegir hosting", stateTask: true, projectId: 4 }
     ],
     projecttasks:null,
     errortask: false
@@ -51,7 +51,15 @@ const TaskState = props => {
     dispatch({
       type: VALIDATE_TASK
     });
-  }
+  };
+
+  //Eliminando una tarea
+  const deleteTaskFn = id => {
+    dispatch({
+      type: DELETE_TASK,
+      payload: id
+    });
+  };
 
   return (
     <TaskContext.Provider
@@ -61,7 +69,8 @@ const TaskState = props => {
         errortask: state.errortask,
         validateTaskFn,
         getTaskFn,
-        addTaskFn
+        addTaskFn,
+        deleteTaskFn
       }}
     >
       {props.children}
