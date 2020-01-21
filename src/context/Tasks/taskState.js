@@ -3,7 +3,7 @@ import React, { useReducer } from "react";
 import TaskContext from "./taskContext";
 import TaskReducer from "./taskReducer";
 
-import { TASKS_PROJECT, ADD_TASK, VALIDATE_TASK, DELETE_TASK } from "../../types";
+import { TASKS_PROJECT, ADD_TASK, VALIDATE_TASK, DELETE_TASK, STATE_TASK } from "../../types";
 
 const TaskState = props => {
   const initialState = {
@@ -61,6 +61,14 @@ const TaskState = props => {
     });
   };
 
+  //Cambia el estado de cada tarea
+  const changeStateTaskFn = task => {
+    dispatch({
+      type: STATE_TASK,
+      payload: task
+    });
+  }
+
   return (
     <TaskContext.Provider
       value={{
@@ -70,7 +78,8 @@ const TaskState = props => {
         validateTaskFn,
         getTaskFn,
         addTaskFn,
-        deleteTaskFn
+        deleteTaskFn,
+        changeStateTaskFn
       }}
     >
       {props.children}
