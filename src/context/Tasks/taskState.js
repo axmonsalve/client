@@ -3,7 +3,7 @@ import React, { useReducer } from "react";
 import TaskContext from "./taskContext";
 import TaskReducer from "./taskReducer";
 
-import { TASKS_PROJECT, ADD_TASK, VALIDATE_TASK, DELETE_TASK, STATE_TASK } from "../../types";
+import { TASKS_PROJECT, ADD_TASK, VALIDATE_TASK, DELETE_TASK, STATE_TASK, ACTUAL_TASK } from "../../types";
 
 const TaskState = props => {
   const initialState = {
@@ -22,7 +22,8 @@ const TaskState = props => {
       { id: 12, nametask: "Elegir hosting", stateTask: true, projectId: 4 }
     ],
     projecttasks:null,
-    errortask: false
+    errortask: false,
+    selectedtask: null
   };
 
   //Crear Dispatch y el state
@@ -69,17 +70,27 @@ const TaskState = props => {
     });
   }
 
+  //Extrae una tarea para la edición
+  const setActualTaskFn = task => {
+    dispatch({
+      type: ACTUAL_TASK,
+      payload: task
+    });
+  }
+
   return (
     <TaskContext.Provider
       value={{
         tasks: state.tasks,
         projecttasks: state.projecttasks,
         errortask: state.errortask,
+        selectedtask: state.selectedtask,
         validateTaskFn,
         getTaskFn,
         addTaskFn,
         deleteTaskFn,
-        changeStateTaskFn
+        changeStateTaskFn,
+        setActualTaskFn
       }}
     >
       {props.children}

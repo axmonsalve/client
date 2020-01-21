@@ -10,7 +10,7 @@ const Task = ({ task }) => {
 
   //Obtener la/s funcion/es del context de tarea
   const tasksContext = useContext(TaskContext);
-  const { deleteTaskFn, getTaskFn, changeStateTaskFn } = tasksContext;
+  const { deleteTaskFn, getTaskFn, changeStateTaskFn, setActualTaskFn } = tasksContext;
 
   //Extraer el proyecto actual
   const [actualProject] = selectedProject;
@@ -31,6 +31,11 @@ const Task = ({ task }) => {
     changeStateTaskFn(task);
   }
 
+  //Agrega una tarea actual cuando el usuario desea editarla
+  const selectTask = task => {
+    setActualTaskFn(task);
+  };
+
   return (
     <li className="tarea sombra">
       <p>{task.nametask}</p>
@@ -50,6 +55,7 @@ const Task = ({ task }) => {
         <button
           type="button"
           className="btn btn-primario"
+          onClick={() => selectTask(task)}
         >
           Editar
         </button>
