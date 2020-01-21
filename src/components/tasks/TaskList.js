@@ -2,6 +2,7 @@ import React, { Fragment, useContext } from "react";
 import Task from "./Task";
 import ProjectContext from "../../context/projects/projectContext";
 import TaskContext from "../../context/Tasks/taskContext";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
 
 const TaskList = () => {
   //Extraemos los proyectos del state incial
@@ -23,7 +24,6 @@ const TaskList = () => {
     deleteProjectFn(actualProject.id);
   };
 
-
   return (
     <Fragment>
       <h2>Proyecto: {actualProject.name}</h2>
@@ -32,9 +32,15 @@ const TaskList = () => {
           <li className="tarea">
             <p>No hay tareas</p>
           </li>
-        ) : (
-          projecttasks.map(task => <Task task={task} />)
-        )}
+        ) :
+          <TransitionGroup>
+            {projecttasks.map(task => (
+              <CSSTransition key={task.id} timeout={400} classNames="tarea">
+                <Task task={task}/>
+              </CSSTransition>
+            ))}
+          </TransitionGroup>
+        }
       </ul>
 
       <button
