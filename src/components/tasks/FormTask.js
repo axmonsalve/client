@@ -9,10 +9,10 @@ const FormTask = () => {
 
   //Obtener la/s funcion/es del context de tarea
   const tasksContext = useContext(TaskContext);
-  const { addTaskFn } = tasksContext;
+  const { errortask, addTaskFn, validateTaskFn, getTaskFn } = tasksContext;
 
   //State
-  const [task, getTask] = useState({
+  const [task, setTask] = useState({
     nametask: ""
   });
 
@@ -22,7 +22,7 @@ const FormTask = () => {
   if (!selectedProject) return null;
 
   const hadleChange = e => {
-    getTask({
+    setTask({
         ...task,
         [e.target.name]: e.target.value
     })
@@ -34,15 +34,23 @@ const FormTask = () => {
     e.preventDefault();
 
     //Validar
-
-    //Pasar la validación
+    if(nametask.trim() === ''){
+        validateTaskFn();
+        return;
+    }
 
     //Agregar la tarea al state de tareas
     task.projectId = actualProject.id;
     task.stateTask = false;
     addTaskFn(task);
 
+    //Obtener y filtrar las tareas del proyecto actual
+    getTaskFn(actualProject.id);
+
     //reiniciar el form
+    setTask({
+        nametask: ""
+    })
   };
 
   return (
@@ -66,6 +74,7 @@ const FormTask = () => {
           />
         </div>
       </form>
+      {errortask? <p className="mensaje error">Debes asignar un nombre a la tarea</p> :null}
     </div>
   );
 };
