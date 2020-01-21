@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import ProjectContext from "../../context/projects/projectContext";
 import TaskContext from "../../context/Tasks/taskContext";
 
@@ -9,7 +9,18 @@ const FormTask = () => {
 
   //Obtener la/s funcion/es del context de tarea
   const tasksContext = useContext(TaskContext);
-  const { errortask, addTaskFn, validateTaskFn, getTaskFn } = tasksContext;
+  const { selectedtask, errortask, addTaskFn, validateTaskFn, getTaskFn } = tasksContext;
+
+  //Effect que detecta si hay una tarea seleccionada
+  useEffect(() => {
+    if(selectedtask !== null){
+      setTask(selectedtask);
+    }else{
+      setTask({
+        nametask: ""
+      })
+    }
+  },[selectedtask]);
 
   //State
   const [task, setTask] = useState({
@@ -70,7 +81,7 @@ const FormTask = () => {
           <input
             type="submit"
             className="btn tbn-primario btn-submit btn-block"
-            value="Agregar tarea"
+            value={selectedtask?"Editar tarea":"Agregar tarea"}
           />
         </div>
       </form>
