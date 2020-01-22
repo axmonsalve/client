@@ -9,18 +9,26 @@ const FormTask = () => {
 
   //Obtener la/s funcion/es del context de tarea
   const tasksContext = useContext(TaskContext);
-  const { selectedtask, errortask, addTaskFn, validateTaskFn, getTaskFn } = tasksContext;
+  const {
+    selectedtask,
+    errortask,
+    addTaskFn,
+    validateTaskFn,
+    getTaskFn,
+    updateTaskFn,
+    cleanSelectedTaskFn
+  } = tasksContext;
 
   //Effect que detecta si hay una tarea seleccionada
   useEffect(() => {
-    if(selectedtask !== null){
+    if (selectedtask !== null) {
       setTask(selectedtask);
-    }else{
+    } else {
       setTask({
         nametask: ""
-      })
+      });
     }
-  },[selectedtask]);
+  }, [selectedtask]);
 
   //State
   const [task, setTask] = useState({
@@ -34,9 +42,9 @@ const FormTask = () => {
 
   const hadleChange = e => {
     setTask({
-        ...task,
-        [e.target.name]: e.target.value
-    })
+      ...task,
+      [e.target.name]: e.target.value
+    });
   };
 
   const [actualProject] = selectedProject;
@@ -45,23 +53,31 @@ const FormTask = () => {
     e.preventDefault();
 
     //Validar
-    if(nametask.trim() === ''){
-        validateTaskFn();
-        return;
+    if (nametask.trim() === "") {
+      validateTaskFn();
+      return;
     }
 
-    //Agregar la tarea al state de tareas
-    task.projectId = actualProject.id;
-    task.stateTask = false;
-    addTaskFn(task);
+    //Revisa si es edicion o si es una nueva tarea
+    if (selectedtask === null) {
+      //Agregar la tarea al state de tareas
+      task.projectId = actualProject.id;
+      task.stateTask = false;
+      addTaskFn(task);
+    }else{
+      //Actualizar tarea existente
+      updateTaskFn(task);
+      //Resetea la tarea seleccionada en el state
+      cleanSelectedTaskFn();
+    }
 
     //Obtener y filtrar las tareas del proyecto actual
     getTaskFn(actualProject.id);
 
     //reiniciar el form
     setTask({
-        nametask: ""
-    })
+      nametask: ""
+    });
   };
 
   return (
@@ -81,11 +97,13 @@ const FormTask = () => {
           <input
             type="submit"
             className="btn tbn-primario btn-submit btn-block"
-            value={selectedtask?"Editar tarea":"Agregar tarea"}
+            value={selectedtask ? "Editar tarea" : "Agregar tarea"}
           />
         </div>
       </form>
-      {errortask? <p className="mensaje error">Debes asignar un nombre a la tarea</p> :null}
+      {errortask ? (
+        <p className="mensaje error">Debes asignar un nombre a la tarea</p>
+      ) : null}
     </div>
   );
 };
